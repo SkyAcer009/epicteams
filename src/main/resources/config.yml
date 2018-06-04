@@ -1,0 +1,12 @@
+max-team-size: 5
+max-team-name-characters: 12
+min-team-name-characters: 4
+invite-timeout: 30
+allow-special-characters: false
+allow-integers: false
+use-plugin-database: true
+auto-database-sync: false
+data-sync-interval: -1
+team-list-per-page: 5
+use-metrics: true
+

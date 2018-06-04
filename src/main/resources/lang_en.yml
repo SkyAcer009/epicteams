@@ -1,0 +1,95 @@
+help-list:
+  member:
+    -
+    -
+  admin:
+    -
+    -
+
+messages:
+
+  # Messages related to creating a team
+  member-create-team-deny: '&bYou are already a member of a team!'
+  owner-create-team-deny: '&bYou are already owning a team!'
+  team-create-already-exists: '&bTeam &e%args% &balready exists!'
+  team-create-no-special-characters: '&bUsage of special characters in name is not allowed!'
+  team-create-no-integers: '&bUsage of integers in team name is not allowed!'
+  max-team-name-chars-exceed: '&bMax team name characters must be &e%maxchars%'
+  min-team-name-less: '&bMin team name characters must be &e%minchars%'
+  create-team-success: '&bYou have successfully created &e%name% &bteam!'
+
+  # Messages related to admin deleting a team
+  admin-delete-team: '&bYou have successfully disbanded &e%name% &bteam!'
+  admin-delete-team-owner-message: '&bYour team has been disbanded by an operator!'
+  admin-delete-team-broadcast: '&bThis team has been disbanded by an operator!'
+  admin-delete-team-not-exist: '&bTeam &e%args% &bdoes not exist!'
+
+  # Messages related to inviting a player
+  member-invite-player-deny: '&bOnly the team owner can invite players to the team!'
+  owner-invite-team-full: '&bYour team is full, you cannot invite players anymore!'
+  owner-invite-player-already-in-team: '&bPlayer &e%player% &bis already in a team!'
+  owner-invite-player-already-own-team: '&bPlayer &e%player% &bis already owning a team!'
+  owner-invite-success: '&bSuccessfully invited &e%player% &bto the team!'
+  owner-invite-already-has-invite: '&bPlayer &e%player% &balready has a pending invite to this team!'
+  owner-invite-player-not-online: '&bPlayer &e%args% &bis not online!'
+  no-team-to-invite: '&bYou do not have a team to invite players to!'
+  invite-message:
+    - '&bPlayer &e%inviter% &bhas invited you to &e%name% &bteam!'
+    - '&bYou have &e%timeout% &bseconds before the invitation expires!'
+
+  # Messages related to joining a team
+  team-join-already-in-team: '&bYou are already in a team!'
+  team-join-already-own-team: '&bYou are already owning a team!'
+  team-join-full-deny: '&bThis team is now full, you cannot join anymore!'
+  player-join-broadcast: '&bPlayer &e%player% &bhas joined the team!'
+  team-join-success: '&bYou have successfully joined &e%name% &bteam!'
+  team-join-no-invite-deny: '&bYou cannot join a team without an invite!'
+  team-join-does-not-exist: '&bTeam &e%args% &bdoes not exist!'
+
+  # Messages related to lack of permissions
+  no-permission: '&bYou do not have permission!'
+
+  # Messages related to disbanding a team
+  member-disband-team-deny: '&bOnly the owner can disband the team!'
+  no-team-to-disband: '&bYou do not have a team to disband!'
+  owner-disband-team: '&bYou have successfully disbanded your team!'
+  owner-disband-team-broadcast: '&bThis team has been disbanded by the owner!'
+
+  # Messages related to leaving team
+  owner-leave-team-deny: '&bYou cannot leave your own team. Disband instead.'
+  member-leave-team-broadcast: '&bPlayer &e%player% &bhas left the team!'
+  member-leave-team: '&bYou have successfully left &e%name% &bteam!'
+  no-team-to-leave: '&bYou do not have a team to leave!'
+  owner-invite-self-deny: '&bYou cannot invite yourself to your team!'
+
+  # Messages related to plugin
+  reload-resources: '&bSuccessfully reloaded plugin resources!'
+  reload-resources-console: 'Successfully reloaded plugin resources!'
+
+  # Messages related to kicking player from team
+  member-kick-team-player-deny: '&bOnly owners can kick players off the team!'
+  owner-kick-player: '&bYou have successfully kicked &e%player% &boff the team!'
+  kicked-player-message: '&bYou have been kicked off the team by the owner!'
+  owner-kick-player-broadcast: '&bPlayer &e%player% &bhas been kicked by the owner!'
+  owner-kick-not-same-team: '&bYou can only kick players on your own team!'
+  no-team-to-kick-from: '&bYou do not have a team to kick players from!'
+  owner-kick-self-deny: '&bYou cannot kick yourself from the team!'
+  owner-kick-never-joined-before: '&bPlayer &e%args% &bhas never joined before!'
+
+  # Messages related to damaging teammates
+  team-damage-message: '&bYou are in the same team with this player!'
+  owner-leave-message: '&bTeam has been disbanded due to owner leaving!'
+
+  # Messages related to argument handling
+  invalid-argument: '&bInvalid sub-command. &e/team(s) &bfor a list of sub-commands!'
+  missing-arguments: '&bMissing arguments. &e/team(s) %args% &c(name)'
+  exceeding-arguments: '&bExceeding arguments. &e/team(s) %args%'
+
+  # Messages related to pages
+  max-pages-exceed: '&bThe page you entered exceeds the maximum page limit!'
+  number-too-big: '&bThe number you have entered is too big!'
+  invalid-number: '&bThe number you have entered is invalid!'
+  team-list-no-teams: '&bThere are currently no teams to list!'
+
+
+
