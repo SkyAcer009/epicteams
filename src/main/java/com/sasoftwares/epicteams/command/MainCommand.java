@@ -87,6 +87,28 @@ public class MainCommand implements CommandExecutor {
                     player.sendMessage(page.getContents());
 
                 }
+                if (args[0].equalsIgnoreCase("create")
+                        || args[0].equalsIgnoreCase("kick")
+                        || args[0].equalsIgnoreCase("join")
+                        || args[0].equalsIgnoreCase("invite")
+                        || args[0].equalsIgnoreCase("delete")) {
+                    ChatManager.i.sendLanguageMessage(player, "messages.missing-arguments", "%args%", args[0]);
+                    return false;
+                }
+                if (args[0].equalsIgnoreCase("help")
+                        || args[0].equalsIgnoreCase("info")
+                        || args[0].equalsIgnoreCase("list")
+                        || args[0].equalsIgnoreCase("leave")
+                        || args[0].equalsIgnoreCase("disband")
+                        || args[0].equalsIgnoreCase("quit")
+                        || args[0].equalsIgnoreCase("reload")
+                        || args[0].equalsIgnoreCase("rel")
+                        || args[0].equalsIgnoreCase("rl")
+                        || args[0].equalsIgnoreCase("r")) {
+                    return false;
+                } else {
+                    ChatManager.i.sendLanguageMessage(player, "messages.invalid-argument");
+                }
             }
             if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("list")) {
@@ -282,11 +304,31 @@ public class MainCommand implements CommandExecutor {
                         || args[0].equalsIgnoreCase("r")
                         || args[0].equalsIgnoreCase("help")) {
                     ChatManager.i.sendLanguageMessage(player, "messages.exceeding-arguments", "%args%", args[0]);
-                    return false;
+                } else {
+                    ChatManager.i.sendLanguageMessage(player, "messages.invalid-argument");
                 }
             }
             if (args.length > 2) {
-            } //TODO
+                if (args[0].equalsIgnoreCase("help")
+                        || args[0].equalsIgnoreCase("list")
+                        || args[0].equalsIgnoreCase("info")
+                        || args[0].equalsIgnoreCase("create")
+                        || args[0].equalsIgnoreCase("disband")
+                        || args[0].equalsIgnoreCase("delete")
+                        || args[0].equalsIgnoreCase("quit")
+                        || args[0].equalsIgnoreCase("leave")
+                        || args[0].equalsIgnoreCase("reload")
+                        || args[0].equalsIgnoreCase("rel")
+                        || args[0].equalsIgnoreCase("rl")
+                        || args[0].equalsIgnoreCase("r")
+                        || args[0].equalsIgnoreCase("kick")
+                        || args[0].equalsIgnoreCase("invite")
+                        || args[0].equalsIgnoreCase("join")) {
+                    ChatManager.i.sendLanguageMessage(player, "messages.exceeding-arguments", "%args%", args[0]);
+                } else {
+                    ChatManager.i.sendLanguageMessage(player, "messages.invalid-argument");
+                }
+            }
         }
         if (sender instanceof ConsoleCommandSender) {
             if (args.length == 1) {

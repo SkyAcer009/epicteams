@@ -22,6 +22,11 @@ import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
 
+/**
+ * NOTE: I do not own any part of this code.
+ * All credits go to: https://github.com/BtoBastian/bStats-Metrics/blob/master/bstats-bukkit/src/main/java/org/bstats/bukkit/Metrics.java
+ */
+
 public class Metrics {
 
     public static final int B_STATS_VERSION = 1;
