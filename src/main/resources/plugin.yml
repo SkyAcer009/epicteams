@@ -1,7 +1,7 @@
 name: EpicTeams
 version: 1.0
 main: com.sasoftwares.epicteams.EpicTeams
-author: SkyAcer009
+authors: [SkyAcer009, MasterFox11]
 description: A simple teams plugin that matches all your server needs!
 commands:
   teams:

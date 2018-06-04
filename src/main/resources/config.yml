@@ -1,12 +1,50 @@
+# The maximum players each team can hold.
+# Default: 5
 max-team-size: 5
+
+# The maximum team name characters to allow.
+# Default: 12
 max-team-name-characters: 12
+
+# The minimum team name characters to allow. (Set 0 for no minimal limit).
+# Default: 4
 min-team-name-characters: 4
+
+# The time before each invite expires (in seconds).
+# Default: 30 seconds
 invite-timeout: 30
+
+# Allow the usage of special characters in team name or not.
+# Default false
 allow-special-characters: false
+
+# Allow the usage of numbers in team name or not.
+# Default: false
 allow-integers: false
-use-plugin-database: true
+
+# IMPORTANT: This option specifies whether you have persistent or temporary teams.
+# Persistent teams: Teams get stored in the plugin database directory. Teams will stay when the server restarts / crashes / plugin reloads (true).
+# Temporary teams: Teams are created and deleted instantly when owner leaves the server, or server restarts / plugin reloads (false).
+# Default: false
+use-plugin-database: false
+
+# Choose whether to keep synchronizing with the database automatically or not.
+# This option doesn't really affect the server performance, otherwise it is not necessary.
+# Use it on your own call.
+# Default: false
 auto-database-sync: false
+
+# If auto-database-sync is true, specify the interval between each synchronization (set 0 or -1 to disable) but then no synchronization will occur.
 data-sync-interval: -1
+
+# Specify the amount of teams to be listed per page of /team(s) list.
+# Default: 5
 team-list-per-page: 5
+
+# Metrics are basically statistics, this option collects information on my plugin usage.
+# I would recommend keeping this enabled as it doesn't affect any server performance at all.
+# It would help me collect information on how many servers use my plugin, and data like such...
+# bStats -> https://bstats.org/plugin/bukkit/EpicTeams/
+# Thanks in advance, and enjoy the plugin ~SkyAcer009
 use-metrics: true
 

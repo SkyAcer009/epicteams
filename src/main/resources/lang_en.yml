@@ -1,95 +1,265 @@
 help-list:
   member:
-    -
-    -
+    - '&8-------------------------------------------------'
+    - '&bEpicTeams v1.0'
+    - '  &bdeveloped by SkyAcer009 && MasterFox11'
+    - '&8-------------------------------------------------'
+    - '&8- &e/team(s) help &8- &bShow the current list.'
+    - '&8- &e/team(s) list &8- &bList the first page of teams.'
+    - '&8- &e/team(s) list &c(page) &8- &bList the specified page of teams.'
+    - '&8- &e/team(s) info &8- &bGet your current team information.'
+    - '&8- &e/team(s) info &c(name) &8- &bGet a specified team information.'
+    - '&8- &e/team(s) create &c(name) &8- &bCreate a new team.'
+    - '&8- &e/team(s) disband &8- &bDisband your current team.'
+    - '&8- &e/team(s) leave|quit &8- &bLeave your current team.'
+    - '&8- &e/team(s) join &c(name) &8- &bJoin a team with an invite.'
+    - '&8- &e/team(s) invite &c(name) &8- &bInvite a player to your team.'
+    - '&8- &e/team(s) kick &c(name) &8- &bKick a player off your team.'
   admin:
-    -
-    -
+    - '&8-------------------------------------------------'
+    - '&bEpicTeams v1.0'
+    - '  &bdeveloped by SkyAcer009 && MasterFox11'
+    - '&8-------------------------------------------------'
+    - '&8- &e/team(s) help &8- &bShow the current list.'
+    - '&8- &e/team(s) list &8- &bList the first page of teams.'
+    - '&8- &e/team(s) list &c(page) &8- &bList the specified page of teams.'
+    - '&8- &e/team(s) info &8- &bGet your current team information.'
+    - '&8- &e/team(s) info &c(name) &8- &bGet a specified team information.'
+    - '&8- &e/team(s) create &c(name) &8- &bCreate a new team.'
+    - '&8- &e/team(s) disband &8- &bDisband your current team.'
+    - '&8- &e/team(s) leave|quit &8- &bLeave your current team.'
+    - '&8- &e/team(s) join &c(name) &8- &bJoin a team with an invite.'
+    - '&8- &e/team(s) invite &c(name) &8- &bInvite a player to your team.'
+    - '&8- &e/team(s) kick &c(name) &8- &bKick a player off your team.'
+    - '&8- &e/team(s) delete &c(name) &8- &bDisband a specified team.'
+    - '&8- &e/team(s) r|rl|rel|reload &8- &bReload the plugin resources.'
 
 messages:
-
   # Messages related to creating a team
+  #####################################
+  # Executes when a team member attempts to create another team.
   member-create-team-deny: '&bYou are already a member of a team!'
+
+  # Executes when a team owner attempts to create another team.
   owner-create-team-deny: '&bYou are already owning a team!'
+
+  # Executes when a player attempts to create a team with an already existing name.
   team-create-already-exists: '&bTeam &e%args% &balready exists!'
+
+  # Executes when a player attempts to create a team and the name contains special characters. (Optional in config.yml)
   team-create-no-special-characters: '&bUsage of special characters in name is not allowed!'
+
+  # Executes when a player attempts to create a team and the name contains numbers. (Optional in config.yml)
   team-create-no-integers: '&bUsage of integers in team name is not allowed!'
+
+  # Executes when a player attempts to create a team and the team name exceeds the maximum character limit set by config.yml
   max-team-name-chars-exceed: '&bMax team name characters must be &e%maxchars%'
+
+  # Executes when a player attempts to create a team and the team name has less characters than what is set by config.yml
   min-team-name-less: '&bMin team name characters must be &e%minchars%'
+
+  # Executes when a player successfully creates a team.
   create-team-success: '&bYou have successfully created &e%name% &bteam!'
 
+
   # Messages related to admin deleting a team
+  ###########################################
+
+  # Executes when an admin deletes a team successfully.
   admin-delete-team: '&bYou have successfully disbanded &e%name% &bteam!'
+
+  # Executes to the disbanded team owner after the admin disbanded his team.
   admin-delete-team-owner-message: '&bYour team has been disbanded by an operator!'
+
+  # The broadcast that is sent to the disbanded team members when admin disbands the team.
   admin-delete-team-broadcast: '&bThis team has been disbanded by an operator!'
+
+  # Executes when an admin attempts to delete a non-existing team.
   admin-delete-team-not-exist: '&bTeam &e%args% &bdoes not exist!'
 
+
   # Messages related to inviting a player
+  #######################################
+
+  # Executes when a team member attempts to invite a player to a the team, while he is not owning it.
   member-invite-player-deny: '&bOnly the team owner can invite players to the team!'
+
+  # Executes when the owner attempts to invite players to the team, but the team is now full.
   owner-invite-team-full: '&bYour team is full, you cannot invite players anymore!'
+
+  # Executes when the team owner invites a player but that player is already a member of another team.
   owner-invite-player-already-in-team: '&bPlayer &e%player% &bis already in a team!'
+
+  # Executes when the team owner invites a player but that player is already owning another team.
   owner-invite-player-already-own-team: '&bPlayer &e%player% &bis already owning a team!'
+
+  # Executes when the owner successfully invites a player to the team.
   owner-invite-success: '&bSuccessfully invited &e%player% &bto the team!'
+
+  # Executes when the owner has invited the player, and tried to invite him again before the previous invite expires.
   owner-invite-already-has-invite: '&bPlayer &e%player% &balready has a pending invite to this team!'
+
+  # Executes when the owner attempts to invite a player who is not online.
   owner-invite-player-not-online: '&bPlayer &e%args% &bis not online!'
+
+  # Executes when a player tries to invite players to his team, but he doesn't have a team.
   no-team-to-invite: '&bYou do not have a team to invite players to!'
+
+  # Executes when a player attempts to invite himself to the team.
+  owner-invite-self-deny: '&bYou cannot invite yourself to your team!'
+
+  # The message that is sent to the invite recipient after a team owner invites him.
+  # Placeholders:
+  # - %inviter% -> The name of the inviter. (aka team owner)
+  # - %name% -> The name of the team invited to.
+  # - %timeout% -> The time left till the invite expires. (Optional in config.yml)
   invite-message:
     - '&bPlayer &e%inviter% &bhas invited you to &e%name% &bteam!'
     - '&bYou have &e%timeout% &bseconds before the invitation expires!'
 
+
   # Messages related to joining a team
+  ####################################
+
+  # Executes when a player attempts to join another team while he is already a member of a team.
   team-join-already-in-team: '&bYou are already in a team!'
+
+  # Executes when a player attempts to join another team while he is already owning a team.
   team-join-already-own-team: '&bYou are already owning a team!'
+
+  # Executes when a player is invited and the team got full at the same time, so he can't join anymore.
   team-join-full-deny: '&bThis team is now full, you cannot join anymore!'
+
+  # The broadcast that is sent to the team when a player joins.
   player-join-broadcast: '&bPlayer &e%player% &bhas joined the team!'
+
+  # Executes when a player successfully joins a team.
   team-join-success: '&bYou have successfully joined &e%name% &bteam!'
+
+  # Executes when a player attempts to join a team without an invite.
   team-join-no-invite-deny: '&bYou cannot join a team without an invite!'
+
+  # Executes when a player attempts to join a non-existing team.
   team-join-does-not-exist: '&bTeam &e%args% &bdoes not exist!'
 
+
   # Messages related to lack of permissions
+  #########################################
+
+  # Executes when a non-permissible action is done.
   no-permission: '&bYou do not have permission!'
 
   # Messages related to disbanding a team
+  #######################################
+
+  # Executes when a team member attempts to disband the whole team.
   member-disband-team-deny: '&bOnly the owner can disband the team!'
+
+  # Executes when a player attempts to disband his team, but he doesn't have one.
   no-team-to-disband: '&bYou do not have a team to disband!'
+
+  # Executes when the team owner successfully disbands the team.
   owner-disband-team: '&bYou have successfully disbanded your team!'
+
+  # The broadcast that is sent to the team when owner disbands.
   owner-disband-team-broadcast: '&bThis team has been disbanded by the owner!'
 
+  # The broadcast that is sent when the team gets disbanded after owner leaves the game. (Only if use-plugin-database is false in config.yml)
+  owner-leave-game-broadcast: '&bTeam has been disbanded due to owner leaving!'
+
+
   # Messages related to leaving team
+  ##################################
+
+  # Executes when a team owner attempts to leave his own team.
   owner-leave-team-deny: '&bYou cannot leave your own team. Disband instead.'
+
+  # The broadcast that is sent to the team when a member leaves.
   member-leave-team-broadcast: '&bPlayer &e%player% &bhas left the team!'
+
+  # Executes when a member successfully leaves the team.
   member-leave-team: '&bYou have successfully left &e%name% &bteam!'
+
+  # Executes when a player attempts to leave a team, but he is not in one.
   no-team-to-leave: '&bYou do not have a team to leave!'
-  owner-invite-self-deny: '&bYou cannot invite yourself to your team!'
+
 
   # Messages related to plugin
+  ############################
+
+  # Executes when the plugin is reloaded.
   reload-resources: '&bSuccessfully reloaded plugin resources!'
+
+  # Executes to console when plugin is reloaded.
   reload-resources-console: 'Successfully reloaded plugin resources!'
 
+
   # Messages related to kicking player from team
+  ##############################################
+
+  # Executes when a team member attempts to kick another player from the team.
   member-kick-team-player-deny: '&bOnly owners can kick players off the team!'
+
+  # Executes when the owner successfully kicks a player off the team.
   owner-kick-player: '&bYou have successfully kicked &e%player% &boff the team!'
+
+  # The message that is sent to the player who got kicked by the owner.
   kicked-player-message: '&bYou have been kicked off the team by the owner!'
+
+  # The broadcast that is sent to the team when a player gets kicked.
   owner-kick-player-broadcast: '&bPlayer &e%player% &bhas been kicked by the owner!'
+
+  # Executes when the owner attempts to kick a player who is not in his team.
   owner-kick-not-same-team: '&bYou can only kick players on your own team!'
+
+  # Executes when a player attempts to kick players from his team, but he doesn't have one.
   no-team-to-kick-from: '&bYou do not have a team to kick players from!'
+
+  # Executes when the owner attempts to kick himself off the team.
   owner-kick-self-deny: '&bYou cannot kick yourself from the team!'
+
+  # Executes when the owner attempts to kick a player who has never joined before.
   owner-kick-never-joined-before: '&bPlayer &e%args% &bhas never joined before!'
 
+
   # Messages related to damaging teammates
+  ########################################
+
+  # Executes when teammates attempt to damage each other in any way.
   team-damage-message: '&bYou are in the same team with this player!'
-  owner-leave-message: '&bTeam has been disbanded due to owner leaving!'
+
 
   # Messages related to argument handling
+  #######################################
+
+  # Executes when an invalid argument is parsed.
   invalid-argument: '&bInvalid sub-command. &e/team(s) &bfor a list of sub-commands!'
+
+  # Executes when a command is missing specific arguments.
   missing-arguments: '&bMissing arguments. &e/team(s) %args% &c(name)'
+
+  # Executes when a command takes too much arguments.
   exceeding-arguments: '&bExceeding arguments. &e/team(s) %args%'
 
+
   # Messages related to pages
+  ###########################
+
+  # Executes when a player puts in a page number more than the current pages.
   max-pages-exceed: '&bThe page you entered exceeds the maximum page limit!'
+
+  # Executes when a player tries to put in an invalid integer. (> than what java can handle as an int)
   number-too-big: '&bThe number you have entered is too big!'
+
+  # Executes when a player puts in 0 or negative integer.
   invalid-number: '&bThe number you have entered is invalid!'
+
+  # Executes when there are no teams on the server to list.
   team-list-no-teams: '&bThere are currently no teams to list!'
+
+  #################################################################################################
+  # End of language file. That took long eh ? Or you might been lazy and just scrolled through... #
+  #################################################################################################
 
 
 

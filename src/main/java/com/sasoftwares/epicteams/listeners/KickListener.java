@@ -17,7 +17,6 @@ public class KickListener implements Listener {
         if (!TeamSerializer.i.databaseEnabled()) {
             if (InviteTimer.doesEntityExist(event.getPlayer().getName())) {
                 InviteTimer.invitedPlayers.remove(InviteTimer.returnPData(event.getPlayer().getName()));
-                return;
             }
             if (TeamFactory.i.isMember(event.getPlayer().getName())) {
                 Team team = TeamFactory.i.getTeamByPlayer(event.getPlayer().getName());
@@ -26,8 +25,7 @@ public class KickListener implements Listener {
             }
             if (TeamFactory.i.isOwner(event.getPlayer().getName())) {
                 Team team = TeamFactory.i.getTeamByOwner(event.getPlayer().getName());
-                ChatManager.i.broadcastTeamExceptOwner(team, "messages.owner-leave-message");
-                team.clearPlayers();
+                ChatManager.i.broadcastTeamExceptOwner(team, "messages.owner-leave-game-broadcast");
                 TeamFactory.i.deleteTeam(team);
             }
         } else {
