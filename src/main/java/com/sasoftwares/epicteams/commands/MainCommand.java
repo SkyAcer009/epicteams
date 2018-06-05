@@ -1,4 +1,4 @@
-package com.sasoftwares.epicteams.command;
+package com.sasoftwares.epicteams.commands;
 
 import com.sasoftwares.epicteams.Team;
 import com.sasoftwares.epicteams.io.TeamSerializer;
@@ -16,6 +16,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+@SuppressWarnings("deprecation")
 public class MainCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -68,14 +69,28 @@ public class MainCommand implements CommandExecutor {
                         || args[0].equalsIgnoreCase("rl")
                         || args[0].equalsIgnoreCase("r")) {
                     FileManager.i.loadConfig();
-                    if (TeamSerializer.i.databaseEnabled()) {
-                        TeamSerializer.i.serializeTeams();
-                    }
+                    TeamSerializer.i.serializeTeams();
                     FileManager.i.loadLanguage();
                     ChatManager.i.sendLanguageMessage(player, "messages.reload-resources");
                 }
                 if (args[0].equalsIgnoreCase("info")) {
-                } //TODO
+                    if (TeamFactory.i.isMember(player.getName()) || TeamFactory.i.isOwner(player.getName())) {
+                        int finalCapacity = FileManager.i.getConfig().getInt("max-team-size");
+                        Team team = TeamFactory.i.getTeamByPlayer(player.getName());
+                        for (String s : FileManager.i.getLanguage().getStringList("messages.team-information-list")) {
+                            player.sendMessage(FileManager.i.colorize(s
+                                    .replaceAll("%name%", team.getName())
+                                    .replaceAll("%owner%", team.getOwner().getName())
+                                    .replaceAll("%capacity%", String.valueOf(team.getCurrentSize()) + "/" + finalCapacity)));
+                        }
+                        for (String s : team.getPlayers()) {
+                            ChatManager.i.sendLanguageMessage(player, "messages.team-information-players-format", "%player%", s);
+                        }
+                        return false;
+                    }
+                    ChatManager.i.sendLanguageMessage(player, "messages.must-be-in-team-for-info");
+                    return false;
+                }
                 if (args[0].equalsIgnoreCase("list")) {
                     if (TeamFactory.i.getTotalTeams() == 0) {
                         ChatManager.i.sendLanguageMessage(player, "messages.team-list-no-teams");
@@ -87,11 +102,32 @@ public class MainCommand implements CommandExecutor {
                     player.sendMessage(page.getContents());
 
                 }
+                if (args[0].equalsIgnoreCase("chat")
+                        || args[0].equalsIgnoreCase("c")) {
+                    if (FileManager.i.getConfig().getBoolean("team-chat-enabled")) {
+                        if (TeamFactory.i.isMember(player.getName()) || TeamFactory.i.isOwner(player.getName())) {
+                            Team team = TeamFactory.i.getTeamByPlayer(player.getName());
+                            if (team.isTeamChat(player.getName())) {
+                                team.setTeamChat(player.getName(), false);
+                                ChatManager.i.sendLanguageMessage(player, "messages.team-chat-toggle-off");
+                            } else {
+                                team.setTeamChat(player.getName(), true);
+                                ChatManager.i.sendLanguageMessage(player, "messages.team-chat-toggle-on");
+                            }
+                        } else {
+                            ChatManager.i.sendLanguageMessage(player, "messages.must-be-in-team-for-chat");
+                        }
+                    } else {
+                        ChatManager.i.sendLanguageMessage(player, "messages.team-chat-disabled");
+                    }
+                }
                 if (args[0].equalsIgnoreCase("create")
                         || args[0].equalsIgnoreCase("kick")
                         || args[0].equalsIgnoreCase("join")
                         || args[0].equalsIgnoreCase("invite")
-                        || args[0].equalsIgnoreCase("delete")) {
+                        || args[0].equalsIgnoreCase("delete")
+                        || args[0].equalsIgnoreCase("mute")
+                        || args[0].equalsIgnoreCase("unmute")) {
                     ChatManager.i.sendLanguageMessage(player, "messages.missing-arguments", "%args%", args[0]);
                     return false;
                 }
@@ -104,13 +140,113 @@ public class MainCommand implements CommandExecutor {
                         || args[0].equalsIgnoreCase("reload")
                         || args[0].equalsIgnoreCase("rel")
                         || args[0].equalsIgnoreCase("rl")
-                        || args[0].equalsIgnoreCase("r")) {
+                        || args[0].equalsIgnoreCase("r")
+                        || args[0].equalsIgnoreCase("chat")
+                        || args[0].equalsIgnoreCase("c")) {
                     return false;
                 } else {
                     ChatManager.i.sendLanguageMessage(player, "messages.invalid-argument");
                 }
             }
             if (args.length == 2) {
+                if (args[0].equalsIgnoreCase("mute")) {
+                    if (FileManager.i.getConfig().getBoolean("team-chat-enabled")) {
+                        if (TeamFactory.i.isMember(player.getName())) {
+                            ChatManager.i.sendLanguageMessage(player, "messages.team-mute-member-deny");
+                            return false;
+                        }
+                        if (TeamFactory.i.isOwner(player.getName())) {
+                            Team team = TeamFactory.i.getTeamByOwner(player.getName());
+                            Player target = Bukkit.getServer().getPlayer(args[1]);
+                            if (target != null) {
+                                if (args[1].equalsIgnoreCase(player.getName())) {
+                                    ChatManager.i.sendLanguageMessage(player, "messages.owner-mute-self-deny");
+                                    return false;
+                                }
+                                if (TeamFactory.i.isSameTeam(player.getName(), target.getName())) {
+                                    if (team.isMuted(target.getName())) {
+                                        ChatManager.i.sendLanguageMessage(player, "messages.team-mute-already-muted", "%player%", target.getName());
+                                        return false;
+                                    }
+                                    team.setMuted(target.getName(), true);
+                                    ChatManager.i.sendLanguageMessage(player, "messages.owner-mute-success", "%player%", target.getName());
+                                    ChatManager.i.sendLanguageMessage(target, "messages.owner-mute-message");
+                                    return false;
+                                }
+                                ChatManager.i.sendLanguageMessage(player, "messages.can-only-mute-same-team");
+                                return false;
+                            }
+                            OfflinePlayer offlineTarget = Bukkit.getServer().getOfflinePlayer(args[1]);
+                            if (offlineTarget.hasPlayedBefore()) {
+                                if (TeamFactory.i.isSameTeam(offlineTarget.getName(), player.getName())) {
+                                    if (team.isMuted(offlineTarget.getName())) {
+                                        ChatManager.i.sendLanguageMessage(player, "messages.team-mute-already-muted", "%player%", offlineTarget.getName());
+                                        return false;
+                                    }
+                                    team.setMuted(offlineTarget.getName(), true);
+                                    ChatManager.i.sendLanguageMessage(player, "messages.owner-mute-success", "%player%", offlineTarget.getName());
+                                    return false;
+                                }
+                                ChatManager.i.sendLanguageMessage(player, "messages.can-only-mute-same-team");
+                                return false;
+                            }
+                            ChatManager.i.sendLanguageMessage(player, "messages.team-mute-never-joined-before", "%args%", args[1]);
+                            return false;
+                        }
+                        ChatManager.i.sendLanguageMessage(player, "messages.team-mute-member-deny");
+                        return false;
+                    }
+                    ChatManager.i.sendLanguageMessage(player, "messages.team-chat-disabled");
+                }
+                if (args[0].equalsIgnoreCase("unmute")) {
+                    if (FileManager.i.getConfig().getBoolean("team-chat-enabled")) {
+                        if (TeamFactory.i.isMember(player.getName())) {
+                            ChatManager.i.sendLanguageMessage(player, "messages.team-unmute-member-deny");
+                            return false;
+                        }
+                        if (TeamFactory.i.isOwner(player.getName())) {
+                            Team team = TeamFactory.i.getTeamByOwner(player.getName());
+                            Player target = Bukkit.getServer().getPlayer(args[1]);
+                            if (target != null) {
+                                if (args[1].equalsIgnoreCase(player.getName())) {
+                                    ChatManager.i.sendLanguageMessage(player, "messages.owner-unmute-self-deny");
+                                    return false;
+                                }
+                                if (TeamFactory.i.isSameTeam(player.getName(), target.getName())) {
+                                    if (!team.isMuted(target.getName())) {
+                                        ChatManager.i.sendLanguageMessage(player, "messages.team-unmute-not-muted", "%player%", target.getName());
+                                        return false;
+                                    }
+                                    team.setMuted(target.getName(), false);
+                                    ChatManager.i.sendLanguageMessage(player, "messages.owner-unmute-success", "%player%", target.getName());
+                                    ChatManager.i.sendLanguageMessage(target, "messages.owner-unmute-message");
+                                    return false;
+                                }
+                                ChatManager.i.sendLanguageMessage(player, "messages.can-only-unmute-same-team");
+                                return false;
+                            }
+                            OfflinePlayer offlineTarget = Bukkit.getServer().getOfflinePlayer(args[1]);
+                            if (offlineTarget.hasPlayedBefore()) {
+                                if (TeamFactory.i.isSameTeam(offlineTarget.getName(), player.getName())) {
+                                    if (!team.isMuted(offlineTarget.getName())) {
+                                        ChatManager.i.sendLanguageMessage(player, "messages.team-unmute-not-muted", "%player%", offlineTarget.getName());
+                                        return false;
+                                    }
+                                    team.setMuted(offlineTarget.getName(), true);
+                                    ChatManager.i.sendLanguageMessage(player, "messages.owner-unmute-success", "%player%", offlineTarget.getName());
+                                    return false;
+                                }
+                                ChatManager.i.sendLanguageMessage(player, "messages.can-only-unmute-same-team");
+                                return false;
+                            }
+                            ChatManager.i.sendLanguageMessage(player, "messages.team-unmute-never-joined-before", "%args%", args[1]);
+                            return false;
+                        }
+                        ChatManager.i.sendLanguageMessage(player, "messages.team-unmute-member-deny");
+                        return false;
+                    }
+                    ChatManager.i.sendLanguageMessage(player, "messages.team-chat-disabled");
+                }
                 if (args[0].equalsIgnoreCase("list")) {
                     try {
                         int pageNum = Integer.parseInt(args[1]);
@@ -131,7 +267,7 @@ public class MainCommand implements CommandExecutor {
                         player.sendMessage(page.getHeader());
                         player.sendMessage(page.getContents());
                     } catch (NumberFormatException exception) {
-                        ChatManager.i.sendLanguageMessage(player, "messages.number-too-big");
+                        ChatManager.i.sendLanguageMessage(player, "messages.invalid-number");
                     }
                 }
                 if (args[0].equalsIgnoreCase("kick")) {
@@ -172,6 +308,7 @@ public class MainCommand implements CommandExecutor {
                         return false;
                     }
                     ChatManager.i.sendLanguageMessage(player, "messages.no-team-to-kick-from");
+                    return false;
                 }
                 if (args[0].equalsIgnoreCase("create")) {
                     if (TeamFactory.i.isMember(player.getName())) {
@@ -204,9 +341,15 @@ public class MainCommand implements CommandExecutor {
                         ChatManager.i.sendLanguageMessage(player, "messages.team-create-no-integers");
                         return false;
                     }
-                    //TODO - ADD SWEAR CHECK
+                    if (!TeamFactory.i.isSwearingEnabled()) {
+                        if (TeamFactory.i.isSwear(args[1], FileManager.i.getRestricted().getStringList("restricted-words"))) {
+                            ChatManager.i.sendLanguageMessage(player, "messages.team-create-no-swear");
+                            return false;
+                        }
+                    }
                     TeamFactory.i.createTeam(player.getName(), args[1]);
                     ChatManager.i.sendLanguageMessage(player, "messages.create-team-success", "%name%", args[1]);
+                    return false;
                 }
                 if (args[0].equalsIgnoreCase("delete")) {
                     if (player.hasPermission("epicteams.admin")) {
@@ -222,9 +365,26 @@ public class MainCommand implements CommandExecutor {
                         return false;
                     }
                     ChatManager.i.sendLanguageMessage(player, "messages.no-permission");
+                    return false;
                 }
                 if (args[0].equalsIgnoreCase("info")) {
-                } //TODO
+                    Team team = TeamFactory.i.getTeamByName(args[1]);
+                    if (team != null) {
+                        int finalCapacity = FileManager.i.getConfig().getInt("max-team-size");
+                        for (String s : FileManager.i.getLanguage().getStringList("messages.team-information-list")) {
+                            player.sendMessage(FileManager.i.colorize(s
+                                    .replaceAll("%name%", team.getName())
+                                    .replaceAll("%owner%", team.getOwner().getName())
+                                    .replaceAll("%capacity%", String.valueOf(team.getCurrentSize()) + "/" + finalCapacity)));
+                        }
+                        for (String s : team.getPlayers()) {
+                            ChatManager.i.sendLanguageMessage(player, "messages.team-information-players-format", "%player%", s);
+                        }
+                        return false;
+                    }
+                    ChatManager.i.sendLanguageMessage(player, "messages.team-info-not-exist", "%args%", args[1]);
+                    return false;
+                }
                 if (args[0].equalsIgnoreCase("invite")) {
                     if (TeamFactory.i.isMember(player.getName())) {
                         ChatManager.i.sendLanguageMessage(player, "messages.member-invite-player-deny");
@@ -268,6 +428,7 @@ public class MainCommand implements CommandExecutor {
                         return false;
                     }
                     ChatManager.i.sendLanguageMessage(player, "messages.no-team-to-invite");
+                    return false;
                 }
                 if (args[0].equalsIgnoreCase("join")) {
                     if (TeamFactory.i.isMember(player.getName())) {
@@ -294,6 +455,7 @@ public class MainCommand implements CommandExecutor {
                         return false;
                     }
                     ChatManager.i.sendLanguageMessage(player, "messages.team-join-does-not-exist", "%args%", args[1]);
+                    return false;
                 }
                 if (args[0].equalsIgnoreCase("leave")
                         || args[0].equalsIgnoreCase("quit")
@@ -302,7 +464,9 @@ public class MainCommand implements CommandExecutor {
                         || args[0].equalsIgnoreCase("rel")
                         || args[0].equalsIgnoreCase("rl")
                         || args[0].equalsIgnoreCase("r")
-                        || args[0].equalsIgnoreCase("help")) {
+                        || args[0].equalsIgnoreCase("help")
+                        || args[0].equalsIgnoreCase("chat")
+                        || args[0].equalsIgnoreCase("c")) {
                     ChatManager.i.sendLanguageMessage(player, "messages.exceeding-arguments", "%args%", args[0]);
                 } else {
                     ChatManager.i.sendLanguageMessage(player, "messages.invalid-argument");
@@ -323,7 +487,11 @@ public class MainCommand implements CommandExecutor {
                         || args[0].equalsIgnoreCase("r")
                         || args[0].equalsIgnoreCase("kick")
                         || args[0].equalsIgnoreCase("invite")
-                        || args[0].equalsIgnoreCase("join")) {
+                        || args[0].equalsIgnoreCase("join")
+                        || args[0].equalsIgnoreCase("chat")
+                        || args[0].equalsIgnoreCase("c")
+                        || args[0].equalsIgnoreCase("mute")
+                        || args[0].equalsIgnoreCase("unmute")) {
                     ChatManager.i.sendLanguageMessage(player, "messages.exceeding-arguments", "%args%", args[0]);
                 } else {
                     ChatManager.i.sendLanguageMessage(player, "messages.invalid-argument");
@@ -337,9 +505,7 @@ public class MainCommand implements CommandExecutor {
                         || args[0].equalsIgnoreCase("rl")
                         || args[0].equalsIgnoreCase("r")) {
                     FileManager.i.loadConfig();
-                    if (TeamSerializer.i.databaseEnabled()) {
-                        TeamSerializer.i.serializeTeams();
-                    }
+                    TeamSerializer.i.serializeTeams();
                     FileManager.i.loadLanguage();
                     sender.sendMessage(FileManager.i.colorize(FileManager.i.getLanguage().getString("messages.reload-resources-console")));
                     return false;

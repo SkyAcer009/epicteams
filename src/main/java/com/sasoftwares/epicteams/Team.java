@@ -16,11 +16,15 @@ public class Team implements Serializable {
     private final String name;
     private final String owner;
     private final ArrayList<String> players;
+    private final ArrayList<String> teamChatPlayers;
+    private final ArrayList<String> mutedPlayers;
 
     public Team(String owner, String name) {
         this.owner = owner;
         this.name = name;
         this.players = new ArrayList<>();
+        this.teamChatPlayers = new ArrayList<>();
+        this.mutedPlayers = new ArrayList<>();
         this.players.add(owner);
     }
 
@@ -37,9 +41,7 @@ public class Team implements Serializable {
 
     public void addPlayer(String name) {
         if (!this.players.contains(name)) this.players.add(name);
-        if (TeamSerializer.i.databaseEnabled()) {
-            TeamSerializer.i.serializeTeam(this);
-        }
+        TeamSerializer.i.serializeTeam(this);
         if (InviteTimer.doesEntityExist(name)) {
             InviteTimer.invitedPlayers.remove(InviteTimer.returnPData(name));
         }
@@ -47,9 +49,7 @@ public class Team implements Serializable {
 
     public void removePlayer(String name) {
         this.players.removeIf(t -> t.contains(name));
-        if (TeamSerializer.i.databaseEnabled()) {
-            TeamSerializer.i.serializeTeam(this);
-        }
+        TeamSerializer.i.serializeTeam(this);
     }
 
     public boolean hasPlayer(String name) {
@@ -86,9 +86,7 @@ public class Team implements Serializable {
 
     public void clearPlayers() {
         this.players.clear();
-        if (TeamSerializer.i.databaseEnabled()) {
-            TeamSerializer.i.serializeTeam(this);
-        }
+        TeamSerializer.i.serializeTeam(this);
     }
 
     public boolean isFull() {
@@ -99,4 +97,31 @@ public class Team implements Serializable {
         return Bukkit.getServer().getPlayer(this.owner);
     }
 
+    public boolean isTeamChat(String name) {
+        return this.teamChatPlayers.contains(name);
+    }
+
+    public void setTeamChat(String name, boolean b) {
+        if (b) {
+            if (!this.teamChatPlayers.contains(name)) this.teamChatPlayers.add(name);
+            TeamSerializer.i.serializeTeam(this);
+        } else {
+            this.teamChatPlayers.removeIf(t -> t.contains(name));
+            TeamSerializer.i.serializeTeam(this);
+        }
+    }
+
+    public boolean isMuted(String name) {
+        return this.mutedPlayers.contains(name);
+    }
+
+    public void setMuted(String name, boolean b) {
+        if (b) {
+            if (!this.mutedPlayers.contains(name)) this.mutedPlayers.add(name);
+            TeamSerializer.i.serializeTeam(this);
+        } else {
+            this.mutedPlayers.removeIf(t -> t.contains(name));
+            TeamSerializer.i.serializeTeam(this);
+        }
+    }
 }

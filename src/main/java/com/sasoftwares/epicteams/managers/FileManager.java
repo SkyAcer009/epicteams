@@ -13,9 +13,9 @@ public class FileManager {
 
     public static FileManager i = new FileManager();
     @Getter
-    private File configFile, databaseFolder, languageFile;
+    private File configFile, databaseFolder, languageFile, restrictedFile;
     @Getter
-    private FileConfiguration config, language;
+    private FileConfiguration config, language, restricted;
     private Plugin plugin;
 
     private FileManager() {
@@ -47,6 +47,24 @@ public class FileManager {
         this.loadLanguage();
         this.saveLanguage();
         this.loadLanguage();
+    }
+
+    public void setupRestricted(Plugin plugin) {
+        this.plugin = plugin;
+        this.restrictedFile = new File(plugin.getDataFolder(), "restricted.yml");
+        this.loadRestricted();
+        this.saveRestricted();
+        this.loadRestricted();
+    }
+
+    public void saveRestricted() {
+        if (!this.restrictedFile.exists()) {
+            this.plugin.saveResource("restricted.yml", false);
+        }
+    }
+
+    public void loadRestricted() {
+        this.restricted = YamlConfiguration.loadConfiguration(this.restrictedFile);
     }
 
     public void saveConfig() {

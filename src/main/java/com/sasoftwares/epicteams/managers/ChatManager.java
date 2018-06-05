@@ -53,5 +53,4 @@ public class ChatManager {
     public void sendTeamOwnerMessage(Team team, String path) {
         team.getOwner().sendMessage(FileManager.i.colorize(FileManager.i.getLanguage().getString(path)));
     }
-
 }

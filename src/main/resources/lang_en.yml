@@ -15,6 +15,8 @@ help-list:
     - '&8- &e/team(s) join &c(name) &8- &bJoin a team with an invite.'
     - '&8- &e/team(s) invite &c(name) &8- &bInvite a player to your team.'
     - '&8- &e/team(s) kick &c(name) &8- &bKick a player off your team.'
+    - '&8- &e/team(s) chat|c &8- &bToggle team chat.'
+    - '&8- &e/tc &8- &bToggle team chat.'
   admin:
     - '&8-------------------------------------------------'
     - '&bEpicTeams v1.0'
@@ -31,6 +33,8 @@ help-list:
     - '&8- &e/team(s) join &c(name) &8- &bJoin a team with an invite.'
     - '&8- &e/team(s) invite &c(name) &8- &bInvite a player to your team.'
     - '&8- &e/team(s) kick &c(name) &8- &bKick a player off your team.'
+    - '&8- &e/team(s) chat|c &8- &bToggle team chat.'
+    - '&8- &e/tc &8- &bToggle team chat.'
     - '&8- &e/team(s) delete &c(name) &8- &bDisband a specified team.'
     - '&8- &e/team(s) r|rl|rel|reload &8- &bReload the plugin resources.'
 
@@ -248,14 +252,53 @@ messages:
   # Executes when a player puts in a page number more than the current pages.
   max-pages-exceed: '&bThe page you entered exceeds the maximum page limit!'
 
-  # Executes when a player tries to put in an invalid integer. (> than what java can handle as an int)
-  number-too-big: '&bThe number you have entered is too big!'
-
   # Executes when a player puts in 0 or negative integer.
   invalid-number: '&bThe number you have entered is invalid!'
 
   # Executes when there are no teams on the server to list.
   team-list-no-teams: '&bThere are currently no teams to list!'
+
+  team-chat-toggle-off: '&bYou are now talking in public!'
+  team-chat-toggle-on: '&bYou are now talking in team chat!'
+  team-chat-spy-toggle-off: '&bYour teamspy has been disabled!'
+  team-chat-spy-toggle-on: '&bYour teamspy has been enabled!'
+  must-be-in-team-for-chat: '&bYou must be in a team to use team chat!'
+  team-chat-arguments-exceed: 'Exceeding arguments. &e%args%'
+  team-chat-member-format: '&8[&eTEAMCHAT&8] &aMEMBER &b%name%: %message%'
+  team-chat-owner-format: '&8[&eTEAMCHAT&8] &cOWNER &b%name%: %message%'
+  team-spy-owner-chat-format: '&8[&aSPY&8] [&eTEAMCHAT&8] &8[&e%name%&8] &cOWNER &b%player%: %message%'
+  team-spy-member-chat-format: '&8[&aSPY&8] [&eTEAMCHAT&8] &8[&e%name%&8] &aMEMBER &b%player%: %message%'
+  team-chat-disabled: '&bTeam chat is disabled.'
+
+  team-mute-member-deny: '&bOnly owners can mute players in a team!'
+  team-mute-already-muted: '&bPlayer &e%player% &bis already muted!'
+  owner-mute-success: '&bYou have successfully muted &e%player%'
+  can-only-mute-same-team: '&bYou can only mute players on the same team!'
+  team-mute-never-joined-before: '&bPlayer &e%args% &bhas never joined before!'
+  owner-mute-self-deny: '&bYou cannot mute yourself in your team!'
+  muted-message: '&bYou are muted!'
+  owner-mute-message: '&bYou have been muted by the team owner!'
+
+  team-unmute-member-deny: '&bOnly team owners can unmute players in a team!'
+  owner-unmute-self-deny: '&bYou cannot unmute yourself in your team!'
+  team-unmute-not-muted: '&bPlayer &e%player% &bis not muted!'
+  owner-unmute-success: '&bYou have successfully unmuted &e%player%'
+  owner-unmute-message: '&bYou have been unmuted by the team owner!'
+  can-only-unmute-same-team: '&bYou can only unmute members in your own team!'
+  team-unmute-never-joined-before: '&bPlayer &e%args% &bhas never joined before!'
+
+  must-be-in-team-for-info: '&bYou must be in a team to get information!'
+  team-information-list:
+    - '&bTeam information:'
+    - '&bName: &e%name%'
+    - '&bOwner: &e%owner%'
+    - '&bCapacity: &e%capacity%'
+    - '&bList of players:'
+  team-information-players-format: '&7- &e%player%'
+  team-info-not-exist: '&bTeam &e%args% does not exist!'
+
+  team-create-no-swear: '&bPlease do not swear in the team name!'
+
 
   #################################################################################################
   # End of language file. That took long eh ? Or you might been lazy and just scrolled through... #

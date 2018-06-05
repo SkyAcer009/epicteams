@@ -22,6 +22,11 @@ allow-special-characters: false
 # Default: false
 allow-integers: false
 
+
+team-chat-enabled: true
+
+enable-team-name-swear: false
+
 # IMPORTANT: This option specifies whether you have persistent or temporary teams.
 # Persistent teams: Teams get stored in the plugin database directory. Teams will stay when the server restarts / crashes / plugin reloads (true).
 # Temporary teams: Teams are created and deleted instantly when owner leaves the server, or server restarts / plugin reloads (false).

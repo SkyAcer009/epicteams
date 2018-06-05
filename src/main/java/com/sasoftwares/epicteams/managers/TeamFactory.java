@@ -6,6 +6,7 @@ import com.sasoftwares.epicteams.timers.InviteTimer;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class TeamFactory {
@@ -32,13 +33,9 @@ public class TeamFactory {
         if (InviteTimer.doesEntityExist(owner)) {
             InviteTimer.invitedPlayers.remove(InviteTimer.returnPData(owner));
         }
-        if (!TeamSerializer.i.databaseEnabled()) {
-            this.teams.add(new Team(owner, name));
-        } else {
-            Team team = new Team(owner, name);
-            this.teams.add(team);
-            TeamSerializer.i.serializeTeam(team);
-        }
+        Team team = new Team(owner, name);
+        this.teams.add(team);
+        TeamSerializer.i.serializeTeam(team);
     }
 
     public void deleteTeam(Team team) {
@@ -56,12 +53,8 @@ public class TeamFactory {
             }
         }
         team.clearPlayers();
-        if (!TeamSerializer.i.databaseEnabled()) {
-            this.teams.remove(team);
-        } else {
-            this.teams.remove(team);
-            TeamSerializer.i.deleteSerializedFile(team.getName());
-        }
+        this.teams.remove(team);
+        TeamSerializer.i.deleteSerializedFile(team.getName());
     }
 
     public boolean isSameTeam(String player1, String player2) {
@@ -86,6 +79,14 @@ public class TeamFactory {
 
     public boolean isLessMinChars(String name) {
         return name.length() < FileManager.i.getConfig().getInt("min-team-name-characters");
+    }
+
+    public boolean isSwear(String name, List<String> list) {
+        return list.stream().anyMatch(x -> x.equalsIgnoreCase(name));
+    }
+
+    public boolean isSwearingEnabled() {
+        return FileManager.i.getConfig().getBoolean("enable-team-name-swear");
     }
 
     public int getTotalTeams() {

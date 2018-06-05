@@ -7,3 +7,6 @@ commands:
   teams:
     aliases: [team]
     description: Main plugin command.
+  teamchat:
+    aliases: [tc]
+    description: Team chat.
