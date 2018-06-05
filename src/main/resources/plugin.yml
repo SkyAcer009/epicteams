@@ -10,3 +10,8 @@ commands:
   teamchat:
     aliases: [tc]
     description: Team chat.
+
+# The 'Metrics.class' class ownership goes to its rightful owners.
+# Source: https://github.com/BtoBastian/bStats-Metrics/blob/master/bstats-bukkit/src/main/java/org/bstats/bukkit/Metrics.java
+# Project source: https://github.com/SkyAcer009/epicteams
+# Project copyright - SkyAcer009 and MasterFox11 © 2018 - All rights reserved.

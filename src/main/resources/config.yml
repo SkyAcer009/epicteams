@@ -22,9 +22,12 @@ allow-special-characters: false
 # Default: false
 allow-integers: false
 
-
+# Shall we enable team chat or not ?
+# Default: true
 team-chat-enabled: true
 
+# Shall we allow the usage of swear words in team name ?
+# Default false
 enable-team-name-swear: false
 
 # IMPORTANT: This option specifies whether you have persistent or temporary teams.
@@ -34,13 +37,13 @@ enable-team-name-swear: false
 use-plugin-database: false
 
 # Choose whether to keep synchronizing with the database automatically or not.
-# This option doesn't really affect the server performance, otherwise it is not necessary.
-# Use it on your own call.
-# Default: false
-auto-database-sync: false
+# This option doesn't really affect the server performance.
+# Default: true
+auto-database-sync: true
 
 # If auto-database-sync is true, specify the interval between each synchronization (set 0 or -1 to disable) but then no synchronization will occur.
-data-sync-interval: -1
+# Default: 120 (seconds)
+data-sync-interval: 120
 
 # Specify the amount of teams to be listed per page of /team(s) list.
 # Default: 5

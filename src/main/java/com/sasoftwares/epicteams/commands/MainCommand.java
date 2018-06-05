@@ -208,10 +208,6 @@ public class MainCommand implements CommandExecutor {
                             Team team = TeamFactory.i.getTeamByOwner(player.getName());
                             Player target = Bukkit.getServer().getPlayer(args[1]);
                             if (target != null) {
-                                if (args[1].equalsIgnoreCase(player.getName())) {
-                                    ChatManager.i.sendLanguageMessage(player, "messages.owner-unmute-self-deny");
-                                    return false;
-                                }
                                 if (TeamFactory.i.isSameTeam(player.getName(), target.getName())) {
                                     if (!team.isMuted(target.getName())) {
                                         ChatManager.i.sendLanguageMessage(player, "messages.team-unmute-not-muted", "%player%", target.getName());

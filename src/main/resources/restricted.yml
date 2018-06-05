@@ -1,4 +1,4 @@
-restricted-words:
+restricted-words: # This list contains the swear words that are restricted from the team name.
   - 'fuck'
   - 'nigga'
   - 'dick'

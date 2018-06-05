@@ -258,45 +258,103 @@ messages:
   # Executes when there are no teams on the server to list.
   team-list-no-teams: '&bThere are currently no teams to list!'
 
+
+  # Messages related to team chat
+  ###############################
+
+  # Executes when team chat is toggled off.
   team-chat-toggle-off: '&bYou are now talking in public!'
+
+  # Executes when team chat is toggled on.
   team-chat-toggle-on: '&bYou are now talking in team chat!'
-  team-chat-spy-toggle-off: '&bYour teamspy has been disabled!'
-  team-chat-spy-toggle-on: '&bYour teamspy has been enabled!'
+
+  # Executes when a player attempts to toggle team chat while not in a team.
   must-be-in-team-for-chat: '&bYou must be in a team to use team chat!'
+
+  # Executes when exceeding arguments is given to /teamchat command.
   team-chat-arguments-exceed: 'Exceeding arguments. &e%args%'
+
+  # The format for members in team chat.
   team-chat-member-format: '&8[&eTEAMCHAT&8] &aMEMBER &b%name%: %message%'
+
+  # The format for owners in team chat.
   team-chat-owner-format: '&8[&eTEAMCHAT&8] &cOWNER &b%name%: %message%'
-  team-spy-owner-chat-format: '&8[&aSPY&8] [&eTEAMCHAT&8] &8[&e%name%&8] &cOWNER &b%player%: %message%'
-  team-spy-member-chat-format: '&8[&aSPY&8] [&eTEAMCHAT&8] &8[&e%name%&8] &aMEMBER &b%player%: %message%'
+
+  # Executes when a player attempts to toggle team chat, but is disabled in config.yml
   team-chat-disabled: '&bTeam chat is disabled.'
 
+
+  # Messages related to team mute.
+  ################################
+
+  # Executes when a team member attempts to mute another member in the same team.
   team-mute-member-deny: '&bOnly owners can mute players in a team!'
+
+  # Executes when the team player is already muted, and the owner tried muting him again.
   team-mute-already-muted: '&bPlayer &e%player% &bis already muted!'
+
+  # Executes when the team owner successfully mutes a team member.
   owner-mute-success: '&bYou have successfully muted &e%player%'
+
+  # Executes when a team owner attempts to mute a player in another team.
   can-only-mute-same-team: '&bYou can only mute players on the same team!'
+
+  # Executes when the team owner attempts to mute players that have never joined before.
   team-mute-never-joined-before: '&bPlayer &e%args% &bhas never joined before!'
+
+  # Executes when the owner attempts to mute himself in his own team.
   owner-mute-self-deny: '&bYou cannot mute yourself in your team!'
+
+  # Executes when a team member attempts to speak while muted in team chat.
   muted-message: '&bYou are muted!'
+
+  # The message that is executed to the target when owner mutes him.
   owner-mute-message: '&bYou have been muted by the team owner!'
 
+
+  # Messages related to team unmute
+  #################################
+
+  # Executes when a team member attempts to unmute other players in the team.
   team-unmute-member-deny: '&bOnly team owners can unmute players in a team!'
-  owner-unmute-self-deny: '&bYou cannot unmute yourself in your team!'
+
+  # Executes when the owner attempts to unmute a player that is not muted.
   team-unmute-not-muted: '&bPlayer &e%player% &bis not muted!'
+
+  # Executes when the owner successfully unmutes another player.
   owner-unmute-success: '&bYou have successfully unmuted &e%player%'
+
+  # The message that is sent to the target when the owner unmutes him.
   owner-unmute-message: '&bYou have been unmuted by the team owner!'
+
+  # Executes when the owner attempts to unmute players outside his own team.
   can-only-unmute-same-team: '&bYou can only unmute members in your own team!'
+
+  # Executes when the owner attempts to unmute players that have never joined before.
   team-unmute-never-joined-before: '&bPlayer &e%args% &bhas never joined before!'
 
+  # Executes when /team info is parsed outside a team.
   must-be-in-team-for-info: '&bYou must be in a team to get information!'
+
+  # The list that is shown when team info is executed.
+  # Placeholders:
+  # %name% -> Team name
+  # %owner% -> Team owner
+  # %capacity% -> current size / max size -> e.g 1/5
   team-information-list:
     - '&bTeam information:'
     - '&bName: &e%name%'
     - '&bOwner: &e%owner%'
     - '&bCapacity: &e%capacity%'
     - '&bList of players:'
+
+  # How should each name in the list look like ?
   team-information-players-format: '&7- &e%player%'
+
+  # Executes when a player attempts to obtain information on a non-existant team.
   team-info-not-exist: '&bTeam &e%args% does not exist!'
 
+  # Executes when the team name contains a word from restricted.yml (Optional in config.yml)
   team-create-no-swear: '&bPlease do not swear in the team name!'
 
 
