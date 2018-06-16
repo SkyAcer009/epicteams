@@ -17,8 +17,8 @@ help-list:
     - '&8- &e/team(s) kick &c(name) &8- &bKick a player off your team.'
     - '&8- &e/team(s) chat|c &8- &bToggle team chat.'
     - '&8- &e/tc &8- &bToggle team chat.'
-    - '&8- &e/team mute &c(name) &8- &bMute a team chat player.'
-    - '&8- &e/team unmute &c(name) &8- &bUnmute a team chat player.'
+    - '&8- &e/team(s) mute &c(name) &8- &bMute a team chat player.'
+    - '&8- &e/team(s) unmute &c(name) &8- &bUnmute a team chat player.'
   admin:
     - '&8-------------------------------------------------'
     - '&bEpicTeams v1.0'
@@ -37,8 +37,8 @@ help-list:
     - '&8- &e/team(s) kick &c(name) &8- &bKick a player off your team.'
     - '&8- &e/team(s) chat|c &8- &bToggle team chat.'
     - '&8- &e/tc &8- &bToggle team chat.'
-    - '&8- &e/team mute &c(name) &8- &bMute a team chat player.'
-    - '&8- &e/team unmute &c(name) &8- &bUnmute a team chat player.'
+    - '&8- &e/team(s) mute &c(name) &8- &bMute a team chat player.'
+    - '&8- &e/team(s) unmute &c(name) &8- &bUnmute a team chat player.'
     - '&8- &e/team(s) delete &c(name) &8- &bDisband a specified team.'
     - '&8- &e/team(s) r|rl|rel|reload &8- &bReload the plugin resources.'
 

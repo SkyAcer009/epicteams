@@ -23,8 +23,8 @@ public class ChatListener implements Listener {
                         return;
                     }
                     event.setFormat(FileManager.i.colorize(FileManager.i.getLanguage().getString("messages.team-chat-member-format")
-                            .replaceAll("%name%", event.getPlayer().getName())
-                            .replaceAll("%message%", event.getMessage())));
+                            .replace("%name%", event.getPlayer().getName())
+                            .replace("%message%", event.getMessage())));
                     event.setMessage(event.getFormat());
                     event.setCancelled(true);
                     team.broadcast(event.getMessage());
@@ -34,15 +34,15 @@ public class ChatListener implements Listener {
                 Team team = TeamFactory.i.getTeamByOwner(event.getPlayer().getName());
                 if (team.isTeamChat(event.getPlayer().getName())) {
                     event.setFormat(FileManager.i.colorize(FileManager.i.getLanguage().getString("messages.team-chat-owner-format")
-                            .replaceAll("%name%", event.getPlayer().getName())
-                            .replaceAll("%message%", event.getMessage())));
+                            .replace("%name%", event.getPlayer().getName())
+                            .replace("%message%", event.getMessage())));
                     event.setMessage(event.getFormat());
                     event.setCancelled(true);
                     team.broadcast(event.getMessage());
                 }
             }
         } catch (Exception exception) {
-            //TODO - FIX CONVERSION EXCEPTION WHEN $ % \ SYMBOLS ARE PARSED
+            //TODO - FIX CONVERSION EXCEPTION WHEN  %  SYMBOL IS PARSED
             event.setCancelled(true);
         }
     }
