@@ -8,6 +8,7 @@ import com.sasoftwares.epicteams.managers.FileManager;
 import com.sasoftwares.epicteams.metrics.Metrics;
 import com.sasoftwares.epicteams.timers.DataUpdater;
 import com.sasoftwares.epicteams.timers.InviteTimer;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class EpicTeams extends JavaPlugin {
@@ -29,6 +30,8 @@ public class EpicTeams extends JavaPlugin {
             Metrics metrics = new Metrics(this);
             metrics.getPluginData();
         }
+        getLogger().info(ChatColor.YELLOW + "EpicTeams v1.1 made by SkyAcer009 and MasterFox11");
+        getLogger().info(ChatColor.YELLOW + "Please do not forget to rate the plugin on spigot if you enjoyed it!");
     }
 
     public void onDisable() {
